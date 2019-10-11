@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+ <!---->
+    <!--&lt;!&ndash;一般我们需要配置一个spring配置文件中配置一个视图解析器&ndash;&gt;-->
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="prefix" value="/WEB-INF/"/>-->
+        <!--<property name="suffix" value=".jsp"></property>-->
+    <!--</bean>-->
+
+ <!--注册校验驱动-->
+ <mvc:annotation-driven validator="validator"/>
+
+
+ <!--校验工厂-->
+ <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+  <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+  <property name="validationMessageSource" ref="messageSource"/>
+ </bean>
+ <!--validation message 校验消息-->
+ <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+  <property name="basename" value="messages"/>
+  <property name="defaultEncoding" value="utf-8"/>
+  <property name="useCodeAsDefaultMessage" value="false"/>
+  <property name="cacheSeconds" value="60"/>
+ </bean>
+
+
+
+
+</beans>
