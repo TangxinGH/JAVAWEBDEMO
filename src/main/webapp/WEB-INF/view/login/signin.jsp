@@ -3,7 +3,7 @@
 
     <head>
         <!-- meta data -->
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -12,7 +12,14 @@
         <script src="./assets/js/jquery-3.4.1.js"></script>
         <script src="./assets/js/jquery-3.4.1.min.js"></script>
 
+		<style>
+			input.error { border: 1px solid red; }
+			label.error {
+				font-weight: bold;
+				color: red;
+			}
 
+		</style>
         <!--font-family-->
 		<%--<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&amp;subset=devanagari,latin-ext" rel="stylesheet">--%>
         
@@ -39,7 +46,8 @@
         
         <!--responsive.css-->
         <link rel="stylesheet" href="assets/css/responsive.css">
-        
+<%--//layui验证吗--%>
+		<link rel="stylesheet" href="./layui/css/layui.css"  media="all">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		
@@ -47,19 +55,21 @@
 			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-
     </head>
 	
 	<body>
+
 		<!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
-		
+
+
 		<!--signin  end -->
 		<section class="signin">
 			<div class="container">
 
 				<div class="sign-content">
+
 					<h2>sign in</h2>
 					<form  action="/signin/signinFormRequest" method="post" id="signinForm">
 					<div class="row">
@@ -74,11 +84,22 @@
 										<label for="signin_formPassword">password</label>
 									    <input type="password" name="password" class="form-control" id="signin_formPassword" placeholder="Password">
 									</div><!--/.form-group -->
-
 							</div><!--/.signin-form -->
 						</div><!--/.col -->
 					</div><!--/.row -->
-					
+						<%--验证码--%>
+						<div  >
+							<label STYLE="font-size:17PX ;font-family: 华文细黑" >Validate</label>
+							<div >
+								<input type="text" name="codeImg"  placeholder="input validate" class="form-control" style="BACKGROUND-COLOR: transparent;" class="layui-input">
+								<img src="./getCodeImg " id="empImgContent"   style="height:40px"><i class="layui-icon layui-icon-refresh layui-anim-scaleSpring" id="refreshImage" style="font-size: 30px; color: teal ;bottom: auto " ></i>
+						<script> $("#refreshImage").click(function(){
+                            $("#empImgContent").attr('src', "./getCodeImg" +"?t=" + Math.random());
+							// 刷新验证码 这样给图片地址拼接一个随机数，用js重新给 img 的 src 赋值，okay，scr发生变化就会重新加载
+                        });</script>
+							</div>
+						</div>
+
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="signin-password">
@@ -86,8 +107,8 @@
 									<ul class="unstyled centered">
 
 										<li>
-										    <input class="styled-checkbox" id="styled-checkbox-2" type="checkbox" value="value2">
-										    <label for="styled-checkbox-2">remember password</label>
+										    <input class="styled-checkbox" id="styled-checkbox-2" name="checkbox2"  type="checkbox" value="value2">
+										    <label for="styled-checkbox-2">remember Me</label>
 										</li>
 
 										<li>

@@ -120,11 +120,21 @@
         <artifactId>hibernate-validator</artifactId>
       <version>5.4.1.Final</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-agroal</artifactId>
+      <version>5.4.8.Final</version>
+      <type>pom</type>
+    </dependency>
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
       <version>1.2.47</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>5.1.9.RELEASE</version>
     </dependency>
 
   </dependencies>
@@ -164,5 +174,31 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
+
+    <!--maven默认的只编译加载resources目录下的配置文件，我把文件放在了java目录下，会Mapping (RESOURCE) not found :
+    所以需要在pom.xml中添加如下配置(eclipse中可能不会出现这种情况)-->
+    <resources>
+      <!--这个元素描述了项目相关或测试相关的所有资源路径 -->
+      <resource>
+        <!-- 描述了资源的目标路径。该路径相对target/classes目录（例如${project.build.outputDirectory}）。举个例
+            子，如果你想资源在特定的包里(org.apache.maven.messages)，你就必须该元素设置为org/apache/maven /messages。然而，如果你只是想把资源放到源码目录结构里，就不需要该配置。 -->
+        <!--<targetPath/>-->
+        <!--是否使用参数值代替参数名。参数值取自properties元素或者文件里配置的属性，文件在filters元素里列出。 -->
+        <filtering />
+        <!--描述存放资源的目录，该路径相对POM路径 -->
+        <directory>src/main/java/example/pojo</directory>
+        <!--包含的模式列表，例如**/*.xml. -->
+        <includes>
+          <include>UserinfoEntity.hbm.xml</include>
+        </includes>
+        <!--排除的模式列表，例如**/*.xml -->
+        <excludes />
+      </resource>
+    </resources>
+
   </build>
+
+
+
 </project>

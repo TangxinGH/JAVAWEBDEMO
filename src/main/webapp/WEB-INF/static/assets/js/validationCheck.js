@@ -189,7 +189,7 @@ $(document).ready(function(){
 
             $.ajax({
                 type: 'post', // 提交方式 get/post
-                url: '/signin/signinFormRequest', // 需要提交的 url
+                url: './signinFormRequest', // 需要提交的 url
                 dataType:"json",
                 data: {
                     'username': function(){return $("#usernameID").val();},
@@ -201,7 +201,8 @@ $(document).ready(function(){
                         var MD52 =md5(string);
 
                         return MD52;},
-                    'rememberpassword': function() {return 0;	}
+                    'rememberMe': function() { console.log ($("input:checkbox:checked").val());return $("input:checkbox:checked").val();//checkbox有多个或者一个，这是组？ radio是单个？,反正是组,如果都没选中，是undefined
+                         }
 
                 },
                 success: function(data) { // data 保存提交后返回的数据，一般为 json 数据
@@ -229,7 +230,11 @@ $(document).ready(function(){
             },
             email:{
              required:true,
-            email:true }
+            email:true },
+            codeImg:{
+                required:true,
+                remote:"./checkCode"
+            },
         },
         //错误信息提示
         messages:{
@@ -246,7 +251,11 @@ $(document).ready(function(){
             },
             email:{
                 required:"请输入邮箱地址",
-                email: "请输入正确的email地址"}
+                email: "请输入正确的email地址"},
+
+            codeImg:{
+                remote :"验证码错误"
+            },
         },
 
     });
@@ -292,7 +301,9 @@ $(document).ready(function(){
                 success: function(data) { // data 保存提交后返回的数据，一般为 json 数据
                     if(data['success']==1)
                     {alert('注册成功！');
-                        location.reload()}
+                        window.location.href="./signin";
+                        // location.reload()
+                    }
                     else {alert("注册失败");};
                 },
                 // $(this).resetForm(); // 提交后重置表单

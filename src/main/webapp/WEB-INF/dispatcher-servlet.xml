@@ -31,7 +31,20 @@
 
     <!--登录页的资源映射-->
     <mvc:resources mapping="/assets/**" location="/WEB-INF/static/assets/"/>
+<!--字体 动画资源-->
+    <mvc:resources mapping="/fontanimation/**" location="/fontanimation/"/>
 
+<mvc:resources mapping="/fonts/**" location="/WEB-INF/static/assets/fonts/"/>
+<!--天气-->
+    <mvc:resources mapping="/weather/**" location="/weather/"/>
+<!--富文本编辑-->
+    <mvc:resources mapping="/tinymce/**" location="/tinymce/"/>
+<!--图标-->
+    <mvc:resources mapping="/icon/**" location="/icon/"/>
+    <mvc:resources mapping="/fontawesomefree5web/**" location="/fontawesomefree5web/"/>
+
+    <!--one阅读 IDEA暂时无法读取-->
+<!--<mvc:resources mapping="/ONEJSON/**" location="../ONEJSON/"/>-->
     <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀(如果最后一个还是表示文件夹,则最后的斜杠不要漏了) 使用JSP-->
     <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
     <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

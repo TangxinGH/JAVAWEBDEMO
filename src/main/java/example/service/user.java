@@ -1,8 +1,13 @@
 package example.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mysql.cj.x.protobuf.MysqlxCrud;
-import org.springframework.test.context.jdbc.Sql;
+import example.pojo.UserinfoEntity;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +16,9 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.*;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class user extends HttpServlet {
@@ -42,9 +49,9 @@ public class user extends HttpServlet {
 //        if(password!=null)out.write(password);else out.write("密码为空");
 //
 
-String sql="SELECT email FROM userinfo where email='"+email+"';";
-        MySQLDemo find=new MySQLDemo();
-               int result= find.checkEmail(sql,email);
+//String sql="SELECT email FROM userinfo where email='"+email+"';";
+        checkuser find=new checkuser();
+               int result= find.check(email);
                if(result==1)out.write( "true");
         //返回双引号的true或false
                else out.write( "false");
@@ -66,8 +73,8 @@ String sql="SELECT email FROM userinfo where email='"+email+"';";
 //                    System.out.println(error.getDefaultMessage());
 String sql = "INSERT INTO userinfo(email, firstname,lastname,password)VALUES('"+email+"','"+fistName+"','"+lastname+"','"+password+"');";
 System.out.println(sql);
-MySQLDemo book=new MySQLDemo();
-if(book.mai(sql)==1) {
+MysqlHibernate book=new MysqlHibernate();
+if(book.myhi(email,password,fistName,lastname)==1) {
     JSONObject object = new JSONObject();
     object.put("success", 1);
     object.put("info", "注册成功");
@@ -83,106 +90,77 @@ if(book.mai(sql)==1) {
     }
 
 }
- class MySQLDemo {
 
-    // MySQL 8.0 以下版本 - JDBC 驱动名及数据库 URL
-//    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-//    static final String DB_URL = "jdbc:mysql://localhost:3306/user";
-//版本区分，重要!!!!,user是数据库名
-//     MySQL 8.0 以上版本 - JDBC 驱动名及数据库 URL
-    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/user?useSSL=false&serverTimezone=UTC";
-     int result;
+class  MysqlHibernate{
+int success=-1;
+   int  myhi(String email,String password,String firstname,String lastname){
+       SessionFactory sf;
+       Configuration cfg;
 
-    // 数据库的用户名与密码，需要根据自己的设置
-    static final String USER = "tangxin";
-    static final String PASS = "123456";
+       UserinfoEntity r = new UserinfoEntity();
+       r.setEmail(email);//这些要放在函数里面才行，难怪找不到错误
+       r.setLastname(lastname);
+       r.setFirstname(firstname);
+       r.setPassword(password);
 
-      int mai(String sql) {
-        Connection conn = null;
-        Statement stmt = null;
-        try{
-            // 注册 JDBC 驱动
-            Class.forName(JDBC_DRIVER);
-            //注意驱动版本
-            // 打开链接
-            System.out.println("连接数据库...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+//读取并解析配置文件
+       cfg = new Configuration().configure();
+//构建SessionFactory对象
+       sf = cfg.buildSessionFactory();
+//打开session
+       Session session = sf.openSession();
+//开启事务
+       Transaction tx = session.beginTransaction();
+//执行持久化操作
+       session.save(r);
+//提交事务
+       tx.commit();
+
+       DetachedCriteria criteria = DetachedCriteria.forClass(UserinfoEntity.class);
+       //添加条件，and 用户与密码都正确
+
+       criteria.add(Restrictions.eq("email",email));
+
+       //查询全部数据
+       List list = criteria.getExecutableCriteria(session).list();
+       Iterator it = list.iterator();
+       if(it.hasNext())success=1;else success=0;
+//关闭session
+       session.close();
+       return success ;//返回插入结果
+   }
+}
+class  checkuser{
+   int  check (String email){
+       SessionFactory sf;
+       Configuration cfg;
+int result=0;
+
+//读取并解析配置文件
+       cfg = new Configuration().configure();
+//构建SessionFactory对象
+       sf = cfg.buildSessionFactory();
+//打开session
+       Session session = sf.openSession();
+//开启事务
+       Transaction tx = session.beginTransaction();
+
+//提交事务
+       tx.commit();
+
+       DetachedCriteria criteria = DetachedCriteria.forClass(UserinfoEntity.class);
 
 
-            System.out.println(" 实例化Statement对象...");
-            stmt = conn.createStatement();
+       criteria.add(Restrictions.eq("email",email));
 
-            PreparedStatement preStmt=conn.prepareStatement(sql);
-//            preStmt.setString(1, "12@");
-//            preStmt.setString(2, "char");
-//            preStmt.setString(3, "lastname123");
-//            preStmt.setString(3, "123456");
-
-            result= preStmt.executeUpdate();
-
-
-            preStmt.close();
-            stmt.close();
-            conn.close();
-
-
-
-        }catch(SQLException se){
-            // 处理 JDBC 错误
-            se.printStackTrace();
-        }catch(Exception e){
-            // 处理 Class.forName 错误
-            e.printStackTrace();
-        }finally{
-            // 关闭资源
-            try{
-                if(stmt!=null) stmt.close();
-            }catch(SQLException se2){
-            }// 什么都不做
-            try{
-                if(conn!=null) conn.close();
-            }catch(SQLException se){
-                se.printStackTrace();
-            }
-        }
-        System.out.println("Goodbye!");
-        return result;
+       //查询全部数据
+       List list = criteria.getExecutableCriteria(session).list();
+       Iterator it = list.iterator();
+       if(it.hasNext()) result  =0;else result=1;
+//关闭session
+       session.close();
+       return result ;//返回插入结果
     }
-  int checkEmail(String sql ,String registerEmail) throws ClassNotFoundException, SQLException {
-      Connection conn = null;
-      Statement stmt = null;
-      int tr=1;
-          // 注册 JDBC 驱动
-          Class.forName(JDBC_DRIVER);
-          //注意驱动版本
-          // 打开链接
-          System.out.println("连接数据库...");
-          conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-
-          System.out.println(" 实例化Statement对象...");
-          stmt = conn.createStatement();
-
-
-
-      ResultSet rs= stmt.executeQuery(sql);
-      while(rs.next()) {
-          // 通过字段检索
-
-          String email = rs.getString("email");
-//          System.out.println(email);
-          if(registerEmail.equals(email))tr=0;
-      }
-
-      //关闭流
-          rs.close();
-          stmt.close();
-          conn.close();
-
-
-          return tr;
-  }
 }
 //     ResultSet executeQuery(String sql); 执行SQL查询，并返回ResultSet 对象。
 //        int executeUpdate(String sql); 可执行增，删，改，返回执行受到影响的行数。
