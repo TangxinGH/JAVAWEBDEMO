@@ -214,20 +214,20 @@ public class IndexController {
     @RequestMapping("/one")
     public void oneRead(HttpServletRequest request,HttpServletResponse response ) throws UnsupportedEncodingException {
         PrintWriter out=null;
-        request.setCharacterEncoding("utf-8");
-        response.setHeader("Content-type", "application/json;charset=utf-8");
+        request.setCharacterEncoding("GB2312");
+        response.setHeader("Content-type", "application/json;charset=GB2312");
         try {
             out = response.getWriter();
         } catch (IOException e) {
             e.printStackTrace();
         }
         String num = request.getParameter("num");
-        if(num==null){num="0";}
+        if(num==null||Integer.parseInt(num)==-0){num="0";}
          if(Integer.parseInt(num)<=0)
          {
 
              String s;
-             s = getJson(Integer.parseInt(num));
+             s = getJson(Integer.parseInt(num));//应该是负数吧
              if (s == null) out.write("s为空，读文件发生io出错");
 
 //      返回json数据

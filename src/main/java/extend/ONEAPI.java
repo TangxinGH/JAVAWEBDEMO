@@ -19,15 +19,18 @@ public class ONEAPI {
        static String httpUrl = "http://api.tianapi.com/txapi/one/index?key=121939b0c5048ac82af5fbaa4b1c792e";
         static String httpArg=null; //参数,默认当日，如果没有其它参数就，就null
     static String folder="ONEJSON";
+
+
        public static String getJson(int num) {
 //           日期
            Date day=new Date();
            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-//           String fileUrl = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-           String relativelyPath=System.getProperty("user.dir");
+           String fileUrl = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+           String relativelyPath=System.getProperty("user.dir");//liNux可不一定，工作目录 ？
            System.out.println(relativelyPath);
-//            System.out.println(fileUrl);
+            System.out.println(fileUrl);
+//           request().getSession().getServletContext().getRealPath();
 
 //文件名
            if(num==0);else day=DateAddOrSub(day,num);// 加减天数

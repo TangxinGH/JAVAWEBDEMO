@@ -8,8 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Bing</title>
+<style >
+    body{background-color: #c6f0ff
+    }
+</style>
 
+    <%--/*导航条*/--%>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="./layui/css/layui.css"  media="all">
+
+    <link rel="text/javascript" href="./layui/layui.js" media="all">
+    <link rel="text/javascript" href="./layui/layer.js" media="all">
+    <%--/*<!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->*/--%>
 
        <script src="./assets/js/jquery-3.4.1.js"></script>
     <link rel="stylesheet" href="/assets/css/responsive.css" />
@@ -25,39 +36,35 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
+
+<%--导航条文件--%>
+
+<%@include file="../indexSection/indexSection0.jsp"%>
+
+
+
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="col-md-12">
-            <ul class="nav nav-tabs">
-                <li class="active">
-                    <a href="#">首页</a>
-                </li>
-                <li>
-                    <a href="#">资料</a>
-                </li>
-                <li class="disabled">
-                    <a href="#">信息</a>
-                </li>
-                <li class="dropdown pull-right">
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">下拉<strong class="caret"></strong></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#">操作</a>
-                        </li>
-                        <li>
-                            <a href="#">设置栏目</a>
-                        </li>
-                        <li>
-                            <a href="#">更多设置</a>
-                        </li>
-                        <li class="divider">
-                        </li>
-                        <li>
-                            <a href="#">分割线</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+
+
+
+                <%--导航条js--%>
+                <script src="./layui/layui.js" charset="utf-8"></script>
+                <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+                <script>
+                    layui.use('element', function(){
+                        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+                        //监听导航点击
+                        element.on('nav(demo)', function(elem){
+                            console.log(elem);
+                            layer.msg(elem.text());
+                        });
+                    });
+                </script>
+
+
         </div>
     </div>
     <div class="row-fluid">
@@ -100,6 +107,14 @@
                     </li>
                     <li data-slide-to="2" data-target="#carousel-714820">
                     </li>
+                    <li data-slide-to="3" data-target="#carousel-714820">
+                    </li>
+                    <li data-slide-to="4" data-target="#carousel-714820">
+                    </li>
+                    <li data-slide-to="5" data-target="#carousel-714820">
+                    </li>
+                    <li data-slide-to="6" data-target="#carousel-714820">
+                    </li>
                 </ol>
                 <div class="carousel-inner">
                     <div class="item active">
@@ -125,7 +140,18 @@
                         </div>
                     </div>
                     <div class="item">
-                        <img id="img3" alt="" src="">
+                    <img id="img3" alt="" src="">
+                    <div class="carousel-caption">
+                        <h4>
+                            自行车
+                        </h4>
+                        <p>
+                            以自行车为工具比赛骑行速度的体育运动。1896年第一届奥林匹克运动会上被列为正式比赛项目。环法赛为最著名的世界自行车锦标赛。
+                        </p>
+                    </div>
+                </div>
+                    <div class="item">
+                        <img id="img4" alt="" src="">
                         <div class="carousel-caption">
                             <h4>
                                 自行车
@@ -135,6 +161,40 @@
                             </p>
                         </div>
                     </div>
+                    <div class="item">
+                        <img id="img5" alt="" src="">
+                        <div class="carousel-caption">
+                            <h4>
+                                自行车
+                            </h4>
+                            <p>
+                                以自行车为工具比赛骑行速度的体育运动。1896年第一届奥林匹克运动会上被列为正式比赛项目。环法赛为最著名的世界自行车锦标赛。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img id="img6" alt="" src="">
+                        <div class="carousel-caption">
+                            <h4>
+                                自行车
+                            </h4>
+                            <p>
+                                以自行车为工具比赛骑行速度的体育运动。1896年第一届奥林匹克运动会上被列为正式比赛项目。环法赛为最著名的世界自行车锦标赛。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img id="img7" alt="" src="">
+                        <div class="carousel-caption">
+                            <h4>
+                                自行车
+                            </h4>
+                            <p>
+                                以自行车为工具比赛骑行速度的体育运动。1896年第一届奥林匹克运动会上被列为正式比赛项目。环法赛为最著名的世界自行车锦标赛。
+                            </p>
+                        </div>
+                    </div>
+
                 </div> <a data-slide="prev" href="#carousel-714820" class="left carousel-control">‹</a> <a data-slide="next" href="#carousel-714820" class="right carousel-control">›</a>
             </div>
         </div>
@@ -142,17 +202,19 @@
             <div class="accordion" id="accordion-44862">
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle" data-parent="#accordion-44862" data-toggle="collapse" href="#accordion-element-374188">每日一读</a>
+                        <a class="accordion-toggle" data-parent="#accordion-44862" data-toggle="collapse" href="#accordion-element-374188">每日一读<br> <img id="onei"></a>
+
                     </div>
                     <div class="accordion-body collapse in" id="accordion-element-374188">
                         <div class="accordion-inner">
-                            文字...
+                            <P id="onep"></P>
+
                         </div>
                     </div>
                 </div>
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle" data-parent="#accordion-44862" data-toggle="collapse" href="#accordion-element-39589">选项卡 #2</a>
+                        <a  id="dateone"  class="accordion-toggle" data-parent="#accordion-44862" data-toggle="collapse" href="#accordion-element-39589"></a>
                     </div>
                     <div class="accordion-body collapse" id="accordion-element-39589">
                         <div class="accordion-inner">
@@ -171,7 +233,7 @@
 <script type="text/javascript">
     let localHandler = function(data){
         // alert('我是本地函数，可以被跨域的remote.js文件调用，远程js带来的数据是：' + data.result);
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 7; i++) {
             console.log("执行了");//为什么没有输出呢？
             // let a=document.getElementsByClassName("carousel-caption")[i].childNodes[2];
             //
@@ -190,6 +252,30 @@
 </script>
 <script src="bingImg"></script>
 
+
+
+
+<%--one js--%>
+<script>
+    $(document).ready(function(){
+
+            $.ajax({
+                type:"GET",
+                url:"./one?num=0",
+                dataType:"json",
+                success:function(data) {
+                    // let json = JSON.parse(data);已是对象，不用再转
+                    document.getElementById("onei").setAttribute("src",data.newslist[0].imgurl);
+                    document.getElementById("onei").setAttribute("style","width:100%;height:40%;");
+                    document.getElementById('onep').innerHTML = data.newslist[0].word;    //
+                    document.getElementById('dateone').innerHTML = data.newslist[0].date;
+
+                }
+            });
+
+    });
+
+</script>
 
 </body>
 </html>
